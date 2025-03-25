@@ -36,36 +36,41 @@ function App() {
 
   return (
   <div className="container">
-    {/* ChatBot Header Start */}
-      <div className="chatbot-header">
-        <div className="header-info">
-          <ChatBotIcon/>
-          <span className="logo-text">BargainBuddy</span>
+    <div className="chatbot-popup">
+        {/* ChatBot Header Start */}
+        <div className="chat-header">
+          <div className="header-info">
+            <ChatBotIcon/>
+            <span className="logo-text">BargainBuddy</span>
+          </div>
+          {/* Button add nhi kara */}
         </div>
-      </div>
-    {/* ChatBot Header End */}
+      {/* ChatBot Header End */}
 
 
-    {/* ChatBot Body Start */}
-      <div className="chat-body">
-        <div className="message bot-message">
-          <ChatBotIcon/>
-          <p className="message-text">
-            Hey there <br />How can I help you today?
-          </p>
+      {/* ChatBot Body Start */}
+        <div className="chat-body">
+          <div className="message bot-message">
+            <ChatBotIcon/>
+            <p className="message-text">
+              Hey there <br />How can I help you today?
+            </p>
+          </div>
+          {chatHistory.map((chat,index) => (
+            <ChatMessage key={index} chat={chat}/>
+          ))}
         </div>
-        {chatHistory.map((chat,index) => (
-          <ChatMessage key={index} chat={chat}/>
-        ))}
-      </div>
-    {/* ChatBot Body End */}
+      {/* ChatBot Body End */}
 
 
-    {/* ChatBot Footer Start */}
-      <div className="chat-footer">
-        <ChatForm chatHistory={chatHistory} setChatHistory = {setChatHistory} generateBotResponse={generateBotResponse}/>
-      </div>
-    {/* ChatBot Footer End */}
+      {/* ChatBot Footer Start */}
+        <div className="chat-footer">
+          <ChatForm chatHistory={chatHistory} setChatHistory = {setChatHistory} generateBotResponse={generateBotResponse}/>
+          
+           
+        </div>
+      {/* ChatBot Footer End */}
+    </div>
     
   </div>      
   )

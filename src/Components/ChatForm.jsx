@@ -6,14 +6,14 @@ export default function ChatForm(props){
 
     function handleformsubmit(e){
         e.preventDefault();
-        const usrMessage = inputRef.current.value.trim();
-        if(!usrMessage) return;
+        const userMessage = inputRef.current.value.trim();
+        if(!userMessage) return;
 
         inputRef.current.value = "";
-        console.log(usrMessage)
+        console.log(userMessage)
         
         // Update chat history with the user's message
-        props.setChatHistory(history => [...history,{role : "usr", text: usrMessage}])
+        props.setChatHistory(history => [...history,{role : "user", text: userMessage}])
 
         // Delay 600ms before showing "Thinking..." and generating response
         setTimeout(() => {
@@ -21,7 +21,7 @@ export default function ChatForm(props){
             props.setChatHistory((history) => [...history, {role: "model", text: "Thinking...."}]);
             
             // Call the functino to generate the both's response
-            props.generateBotResponse([...props.chatHistory, {role: "usr", text: usrMessage}]);
+            props.generateBotResponse([...props.chatHistory, {role: "user", text: userMessage}]);
         
         },600);
 

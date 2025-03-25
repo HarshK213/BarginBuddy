@@ -8,7 +8,6 @@ export default function ChatMessage(props){
           <p className="message-text">
             {props.chat.text }
           </p>
-          {/* <UserIcon/> */}
         </div>        
     )
 }

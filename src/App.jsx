@@ -6,11 +6,12 @@ import { GoogleGenAI } from "@google/genai";
 
 
 function App() {
+  // console.log(import.meta.env.GEMINI_API)
   const [chatHistory,setChatHistory] = useState([]);
   const chatBodyRef = useRef();
 
   const ai = new GoogleGenAI({
-    apiKey: "AIzaSyDHuAVTU5T713kQ8qxHHlSTSH4AkqcmTFM",
+    apiKey: `${import.meta.env.GEMINI_API}`,
   });
 
   const generateBotResponse = async(history,userMsg) => {
@@ -829,7 +830,7 @@ function App() {
       }
       updateHistory(res);
 
-      // console.log(userMsg)
+      console.log(userMsg)
 
     }catch(error){
       console.log(error);

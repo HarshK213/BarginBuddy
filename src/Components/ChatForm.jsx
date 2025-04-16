@@ -10,7 +10,7 @@ export default function ChatForm(props){
         if(!userMessage) return;
 
         inputRef.current.value = "";
-        console.log(userMessage)
+        // console.log(userMessage)
         
         // Update chat history with the user's message
         props.setChatHistory(history => [...history,{role : "user", text: userMessage}])
@@ -21,7 +21,7 @@ export default function ChatForm(props){
             props.setChatHistory((history) => [...history, {role: "model", text: "Thinking...."}]);
             
             // Call the functino to generate the both's response
-            props.generateBotResponse([...props.chatHistory, {role: "user", text: userMessage}]);
+            props.generateBotResponse([...props.chatHistory, {role: "user", text: userMessage}],userMessage);
         
         },600);
 

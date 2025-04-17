@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
+import { GoogleGenAI } from "@google/genai";
 import ChatBotIcon from './Components/ChatBotIcon'
 import ChatForm from './Components/ChatForm'
 import ChatMessage from './Components/ChatMessage'
-import { GoogleGenAI } from "@google/genai";
-
 
 function App() {
   // console.log(import.meta.env.GEMINI_API)
@@ -11,7 +10,7 @@ function App() {
   const chatBodyRef = useRef();
 
   const ai = new GoogleGenAI({
-    apiKey: `${import.meta.env.GEMINI_API}`,
+    apiKey: import.meta.env.VITE_GEMINI_API,
   });
 
   const generateBotResponse = async(history,userMsg) => {
@@ -23,32 +22,15 @@ function App() {
    
     // console.log(history);
     history = history.map(({role,text}) => ({role,parts:[{text}]}))
-   
-    // const requestOptions = {
-    //   method : "POST",
-    //   headers : {"Content-Type" : "application/json"},
-     
-    //   body: JSON.stringify({contents: history })
-    // }  
-    
     
     try{
-
-      // Make the api call to get the bot's response.
-         
-      // const response = await fetch(import.meta.env.VITE_API_URL, requestOptions);
-      // const data = await response.json();
-      // if(!response.ok){
-      //   throw new Error(data.error.message || "Something went wrong!")
-      // }
-      // // console.log(data);
-      // // Clean and update chat history with bot's response.
-      // const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
-      // updateHistory(apiResponseText);
-
-      
+      // calling api for the response 
       const chat = ai.chats.create({
+        
+        // Model used for project
         model: "gemini-2.0-flash",
+        
+        // the training prompt for the response
         history: [
           {
             role: "user",
@@ -818,26 +800,26 @@ function App() {
           //     },
           //   ],
           // },
-        ],
+        ]
       });
+
+      // sending usermessage to api for response 
       const stream1 = await chat.sendMessageStream({
         message: `${userMsg}`,
       });
-      // console.log(stream1.return())
+
       let res = "";
       for await (const chunk of stream1) {
         res += chunk.text;
       }
-      updateHistory(res);
-
-      console.log(userMsg)
-
+      // console.log(res.replace("```"," ").replace("```"," "))
+      updateHistory(res.replace("```"," ").replace("```"," "));
     }catch(error){
       console.log(error);
     }
   }
 
-
+// this will alway scroll to the bottom of the chat.
   useEffect(() => {
     chatBodyRef.current.scrollTo({top: chatBodyRef.current.scrollHeight, behavior: "smooth"});
   }
@@ -847,13 +829,13 @@ function App() {
   return (
   <div className="container">
     <div className="chatbot-popup">
+
         {/* ChatBot Header Start */}
         <div className="chat-header">
           <div className="header-info">
             <ChatBotIcon/>
             <span className="logo-text">BargainBuddy</span>
           </div>
-          {/* Button add nhi kara */}
         </div>
       {/* ChatBot Header End */}
 
@@ -876,10 +858,9 @@ function App() {
       {/* ChatBot Footer Start */}
         <div className="chat-footer">
           <ChatForm chatHistory={chatHistory} setChatHistory = {setChatHistory} generateBotResponse={generateBotResponse}/>
-          
-           
         </div>
       {/* ChatBot Footer End */}
+
     </div>
     
   </div>      

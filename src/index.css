@@ -18,9 +18,10 @@ body{
   background-color: liner-gradient(90deg, #f4f0ff, #dacdff);
 }
 
+/* this will control the width of the chat section. */
 .chatbot-popup{
   position: relative;
-  width: 420px;
+  width: 1020px;  
   overflow: hidden;
   background: white;
   border-radius: 15px;
